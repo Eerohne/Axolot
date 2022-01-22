@@ -1,6 +1,8 @@
 package core;
 
-public class SystemBus implements IDevice{
+import core.IDevice;
+
+public class SystemBus implements IDevice {
     @Override
     public void clock() {
 
