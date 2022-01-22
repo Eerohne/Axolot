@@ -1,4 +1,9 @@
 package core;
 
-public class CPU {
+public class CPU implements IDevice{
+
+    @Override
+    public void clock() {
+
+    }
 }
