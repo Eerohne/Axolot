@@ -48,6 +48,11 @@ public class Command {
         new Command("tay",  "Transfer A Y", "Transfers the value of A to Y",                        AddressingMode.IMPLIED,     (byte)0x27),
         new Command("txa",  "Transfer X A", "Transfers the value of X to A",                        AddressingMode.IMPLIED,     (byte)0x28),
         new Command("tya",  "Transfer Y A", "Transfers the value of Y to A",                        AddressingMode.IMPLIED,     (byte)0x29),
+        new Command("jmp",  "Jump",         "Jumps to the given address parameter",                 AddressingMode.ABSOLUTE,    (byte)0x2A),
+        new Command("jmp",  "Jump",         "Jumps to the given address parameter",                 AddressingMode.ABSOLUTEX,   (byte)0x2B),
+        new Command("jsr",  "Jump to subroutine","Jumps to the given subroutine",                   AddressingMode.ABSOLUTE,    (byte)0x2C),
+        new Command("jsr",  "Jump to subroutine","Jumps to the given subroutine",                   AddressingMode.ABSOLUTEX,   (byte)0x2D),
+        new Command("rsr",  "Return from subroutine","Returns to the address before jumping",       AddressingMode.ABSOLUTEX,   (byte)0x2D),
     };
 
     private static final HashMap<Byte, Command> commandDict = createCommandDictionnary();
