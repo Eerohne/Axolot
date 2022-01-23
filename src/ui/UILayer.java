@@ -55,7 +55,7 @@ public class UILayer implements IEventListener{
         ImGuiGl.init("#version 410");
     }
 
-    public void ImGuibegin()
+    public void ImGuiBegin()
     {
         ImGuiGlfw.newFrame();
         ImGui.newFrame();
@@ -65,7 +65,7 @@ public class UILayer implements IEventListener{
     {
         window.clear();
 
-        ImGuibegin();
+        ImGuiBegin();
         {
             boolean dockspaceOpen = true;
             boolean opt_fullscreen_persistant = true;
@@ -109,12 +109,12 @@ public class UILayer implements IEventListener{
             //dockspace end
             ImGui.end();
         }
-        ImGuiend();
+        ImGuiEnd();
 
         window.update();
     }
 
-    public void ImGuiend(){
+    public void ImGuiEnd(){
 
         ImGui.render();
         ImGuiGl.renderDrawData(ImGui.getDrawData());
