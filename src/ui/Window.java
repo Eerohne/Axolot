@@ -6,8 +6,8 @@ import org.lwjgl.opengl.GLUtil;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
-import static org.lwjgl.opengl.GL11.GL_TRUE;
-import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -22,6 +22,8 @@ public class Window {
     protected boolean vSync;
     protected boolean debugMode = true;
 
+    private IEventListener eventListener;
+
     public Window(String title, int width, int height, boolean vSync, boolean debugMode){
         this.title = title;
         this.width = width;
@@ -31,7 +33,7 @@ public class Window {
     }
 
 
-    public void init() {
+    public void init(IEventListener eventListener) {
         if(!glfwInit()){
             throw new IllegalStateException("Failed to initialize GLFW");
         }
@@ -52,19 +54,19 @@ public class Window {
         }
 
         //***CALLBACKS***//
-        /*{
-            setEventListener(listener);
+        {
+            this.eventListener = eventListener;
 
             //Sets close callback
             glfwSetWindowCloseCallback(window, (window) -> {
                 glfwSetWindowShouldClose(window, false); //set shouldClose to false, engine should decide that
 
                 if (eventListener != null) {
-                    eventListener.onEvent(new Event.WindowCloseEvent());
+                    eventListener.onCloseEvent();
                 }
             });
 
-            //Sets focus callback
+           /* //Sets focus callback
             glfwSetWindowFocusCallback(window, (window, focused) -> {
                 if (focused)
                     eventListener.onEvent(new Event.WindowFocusEvent());
@@ -140,6 +142,7 @@ public class Window {
                 eventListener.onEvent(new Event.MouseScrolledEvent((float) sx, (float) sy));
             });
         }*/
+        }
 
         glfwMakeContextCurrent(window);
         glfwShowWindow(window);
@@ -168,6 +171,12 @@ public class Window {
     public void close()
     {
         glfwDestroyWindow(window);
+    }
+
+    public void clear()
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);//r, g, b ,1);
     }
 
     public void setDebugMode(boolean isDebugOn) {
