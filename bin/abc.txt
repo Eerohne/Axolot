@@ -1,0 +1,25 @@
+;this program displays the alphabet on the terminal
+;the program loops through all ascii codes of the letters and stores them sequentially in memory
+;we them point
+
+lda , 90 	; Loads 90 into A (ascii value of Z)
+ldx , 25 	; Loads 25 into X (the offset inside memory)
+
+sta x $0100
+
+:loop ;now loop through every letter and store in memory using x as an offset
+dec
+dex
+bng # endLoop ;stop if x has underflown (26 loops have passed, all characters are generated)
+sta x $0100
+jmp # loop
+
+:endLoop ;now point the terminal to
+lda , 01
+sta # $fe01
+lda , 00
+sta # $fe02
+lda , 01
+sta # $fe00
+
+hlt

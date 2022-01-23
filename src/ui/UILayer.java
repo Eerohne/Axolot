@@ -64,11 +64,17 @@ public class UILayer implements IEventListener{
 
         ImGuiGl = new ImGuiImplGl3();
 
-        ImFontAtlas fontAtlas = ImGuiIO.getFonts();
-        ImFontConfig fontConfig = new ImFontConfig();
-        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
+        try {
+            ImFontAtlas fontAtlas = ImGuiIO.getFonts();
+            ImFontConfig fontConfig = new ImFontConfig();
+            fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        ImFont font = ImGuiIO.getFonts().addFontFromFileTTF("FreeMono.ttf", 16, fontConfig);
+            ImFont font = ImGuiIO.getFonts().addFontFromFileTTF("FreeMono.ttf", 16, fontConfig);
+        }
+        catch(Exception e)
+        {
+
+        }
 
         ImGuiGl.init("#version 410");
         //ImGui.pushFont(font);

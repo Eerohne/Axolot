@@ -9,6 +9,8 @@ public class Asssembler {
     byte[] program;
 
     public Asssembler(File file){
+        if(file == null)
+            return;
         try{
             SourceParser srcParser = new SourceParser(file);
             program = srcParser.getByteTranslation();

@@ -29,6 +29,8 @@ public class RAM {
     }
 
     public void loadProgram(byte[] program){
+        if(program == null)
+            return;
         System.arraycopy(program, 0, memory, 0, program.length);
     }
 }
