@@ -25,7 +25,7 @@ public class MemoryPanel extends Panel{
 
         //memPointer
         {
-            ImGui.text("Start: ");
+            ImGui.text("Start (hex): ");
             ImGui.sameLine();
             ImGui.setNextItemWidth(50);
             memPtr_RegisterText.set((Integer.toHexString((memoryPointer & 0xffff)).toUpperCase()));
@@ -49,13 +49,13 @@ public class MemoryPanel extends Panel{
 
             memoryPointer -= (memoryPointer % 0x10);
 
-            ImGui.text("memPtr: " + (int) memoryPointer);
+            ImGui.text("memPtr (Decimal): " + (int) memoryPointer);
         }
 
 
         //editField
         {
-            ImGui.text("Edit memory (" + Integer.toHexString(memoryPointer + selectedCell) + ") : ");
+            ImGui.text("Edit memory (" + ((int)(systemBus.getRam().getValue((char)(memoryPointer + selectedCell))) & 0xff) + " Decimal) : ");
             ImGui.sameLine();
             ImGui.setNextItemWidth(50);
             byte fetchedValue = systemBus.getRam().getValue((char)(memoryPointer + selectedCell));

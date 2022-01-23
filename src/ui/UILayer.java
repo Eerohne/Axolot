@@ -31,6 +31,7 @@ public class UILayer implements IEventListener{
 
     private CPUPanel cpuPanel;
     private MemoryPanel memoryPanel;
+    private ControlPanel controlPanel;
 
     public UILayer(SystemBus systemBus) {
         this.systemBus = systemBus;
@@ -40,6 +41,7 @@ public class UILayer implements IEventListener{
 
         this.cpuPanel = new CPUPanel();
         this.memoryPanel = new MemoryPanel();
+        this.controlPanel = new ControlPanel();
 
         initImGui();
     }
@@ -119,6 +121,13 @@ public class UILayer implements IEventListener{
             ImGui.begin("MEMORY");
             {
                 memoryPanel.ImGuiRender(systemBus);
+            }
+            ImGui.end();
+
+            //CONTROL PANEL
+            ImGui.begin("CONTROL");
+            {
+                controlPanel.ImGuiRender(systemBus);
             }
             ImGui.end();
 
