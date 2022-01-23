@@ -37,5 +37,6 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 
+
     implementation "io.github.spair:imgui-java-app:1.86.0"
 }
