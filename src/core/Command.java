@@ -103,4 +103,14 @@ public class Command {
 
         return commandHashMap;
     }
+
+    @Override
+    public String toString() {
+        return "Command{" +
+                "mnemonic='" + mnemonic + '\'' +
+                ", name='" + name + '\'' +
+                ", mode=" + mode +
+                ", opcode=" + opcode +
+                '}';
+    }
 }

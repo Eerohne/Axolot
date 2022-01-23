@@ -12,7 +12,7 @@ public class SystemBus extends Device {
 
     @Override
     public void clock() {
-
+        cpu.clock();
     }
 
     public RAM getRam() {
