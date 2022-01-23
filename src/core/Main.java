@@ -9,10 +9,13 @@ public class Main {
         SystemBus systemBus = new SystemBus();
         UILayer uiLayer = new UILayer(systemBus);
 
+        systemBus.getRam().storeValue((byte)0x40, (char)0x00);
+        systemBus.clock();
+
         while(uiLayer.running)
         {
             systemBus.clock();
-            System.out.println(systemBus.getCpu().getA());
+            //systemBus.cpu.
             uiLayer.updateUI();
         }
 

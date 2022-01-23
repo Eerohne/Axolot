@@ -33,6 +33,7 @@ public class CPU extends Device{
     public void clock() {
         byte command = bus.getRam().getValue(pc);
         Command cmd = Command.getCommandDetails(command);
+        getCommand(command);
         switch (cmd.getMode()){
             case IMMEDIATE:     fetchImmediate();   break;
             case ABSOLUTE:      fetchAbsolute();    break;
@@ -75,8 +76,10 @@ public class CPU extends Device{
 
     private void zero(byte r){ flags[0] = (r==0); }
     private void carry(){ flags[1] = (A==0); }
-    private void neg() {
+    private void neg() {  }
 
+    public void getCommand(byte opcode){
+        System.out.println(Command.getCommandDetails(opcode));
     }
 
     private void fetchImmediate(){
@@ -97,42 +100,42 @@ public class CPU extends Device{
 
     private void halt() {  }
 
-    private void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A < tmpA);}
-    private void sub() { byte tmpA = A; A -= fetchedValue; flags[1] = (A > tmpA);}
+    public void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A < tmpA);}
+    public void sub() { byte tmpA = A; A -= fetchedValue; flags[1] = (A > tmpA);}
 
-    private void lda() { A = fetchedValue; }
-    private void ldx() { X = fetchedValue; }
-    private void ldy() { Y = fetchedValue; }
+    public void lda() { A = fetchedValue; }
+    public void ldx() { X = fetchedValue; }
+    public void ldy() { Y = fetchedValue; }
 
-    private void sta() { bus.getRam().storeValue(A, tempAddress); }
-    private void stx() { bus.getRam().storeValue(X, tempAddress); }
-    private void sty() { bus.getRam().storeValue(Y, tempAddress); }
+    public void sta() { bus.getRam().storeValue(A, tempAddress); }
+    public void stx() { bus.getRam().storeValue(X, tempAddress); }
+    public void sty() { bus.getRam().storeValue(Y, tempAddress); }
 
-    private void inc() { byte tmpA = A; A++; flags[1] = (A < tmpA);}
-    private void inx() { X++; }
-    private void iny() { Y++; }
+    public void inc() { byte tmpA = A; A++; flags[1] = (A < tmpA);}
+    public void inx() { X++; }
+    public void iny() { Y++; }
 
-    private void dec() { A--; }
-    private void dex() { X--; }
-    private void dey() { Y--; }
+    public void dec() { A--; }
+    public void dex() { X--; }
+    public void dey() { Y--; }
 
-    private void shr() { A >>= 1; }
-    private void shl() { A <<= 1; }
+    public void shr() { A >>= 1; }
+    public void shl() { A <<= 1; }
 
-    private void and() { A &= fetchedValue; }
-    private void or()  { A |= fetchedValue; }
-    private void xor() { A ^= fetchedValue; }
+    public void and() { A &= fetchedValue; }
+    public void or()  { A |= fetchedValue; }
+    public void xor() { A ^= fetchedValue; }
 
-    private void pha() { bus.getRam().storeValue(A, stackPointer++); }
-    private void phx() { bus.getRam().storeValue(X, stackPointer++); }
+    public void pha() { bus.getRam().storeValue(A, stackPointer++); }
+    public void phx() { bus.getRam().storeValue(X, stackPointer++); }
 
-    private void pla() { A = bus.getRam().getValue(stackPointer--); }
-    private void plx() { X = bus.getRam().getValue(stackPointer--); }
+    public void pla() { A = bus.getRam().getValue(stackPointer--); }
+    public void plx() { X = bus.getRam().getValue(stackPointer--); }
 
-    private void tax() { X = A; }
-    private void tay() { Y = A; }
-    private void txa() { A = X; }
-    private void tya() { A = Y; }
+    public void tax() { X = A; }
+    public void tay() { Y = A; }
+    public void txa() { A = X; }
+    public void tya() { A = Y; }
 
     public char getPc() {
         return pc;
@@ -148,5 +151,25 @@ public class CPU extends Device{
 
     public byte getY() {
         return Y;
+    }
+
+    public void setPc(char pc) {
+        this.pc = pc;
+    }
+
+    public void setA(byte a) {
+        A = a;
+    }
+
+    public void setX(byte x) {
+        X = x;
+    }
+
+    public void setY(byte y) {
+        Y = y;
+    }
+
+    public void setStackPointer(char stackPointer) {
+        this.stackPointer = stackPointer;
     }
 }
