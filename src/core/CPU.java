@@ -42,7 +42,7 @@ public class CPU extends Device{
         }
         switch (cmd.getMnemonic()){
             case "nop" :                                break;
-            case "halt":    halt();                     break;
+            case "halt":    hlt();                     break;
             case "add" :    add();  zero(A);            break;
             case "sub" :    sub();  zero(A);            break;
             case "lda" :    lda();  zero(A);            break;
@@ -105,7 +105,7 @@ public class CPU extends Device{
         pc++;
     }
 
-    private void halt() {  }
+    private void hlt() {  }
 
     private void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A < tmpA);}
     private void sub() { byte tmpA = A; A -= fetchedValue; flags[1] = (A > tmpA);}
@@ -145,8 +145,13 @@ public class CPU extends Device{
     private void tya() { A = Y; }
 
     private void jmp(){ pc = --tempAddress; }
-    private void jsr(){ bus.getRam().storeAValue(pc, stackPointer++); stackPointer++; pc = tempAddress; }
+    private void jsr(){ bus.getRam().storeAValue(pc, stackPointer++);  stackPointer++; pc = --tempAddress; }
     private void rsr(){ stackPointer -= 2; bus.getRam().getAValue(stackPointer); }
+
+    private void bnz(){}
+    private void bzr(){}
+    private void bcr(){}
+    private void bng(){}
 
     //////////////////////////////////////////////////////////////////
 

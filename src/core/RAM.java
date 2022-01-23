@@ -17,6 +17,6 @@ public class RAM {
 
     public void storeAValue(char aValue, char address){
         memory[address] = (byte)(aValue >> 8);
-        memory[(char)(address + 1)] = (byte)(aValue);
+        memory[address+1] = (byte)(aValue);
     }
 }
