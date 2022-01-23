@@ -168,4 +168,5 @@ public class CPU extends Device{
     public void setY(byte y) { Y = y; }
     public void setStackPointer(char stackPointer) { this.stackPointer = stackPointer; }
     public void setFlags(boolean[] flags) { this.flags = flags; }
+    public void setFlag(int index, boolean value) { this.flags[index] = value; }
 }

@@ -17,6 +17,7 @@ public class Main {
         systemBus.getRam().storeValue((byte)0x1a, (char)0x2204);
 
 
+        byte i = 0;
         systemBus.getCpu().setA((byte)40);
         systemBus.getCpu().setX((byte)4);
         systemBus.getCpu().setY((byte)67);
@@ -32,5 +33,6 @@ public class Main {
         }
 
         uiLayer.destroy();
+
     }
 }
