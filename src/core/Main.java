@@ -12,10 +12,12 @@ public class Main {
         systemBus.getRam().storeValue((byte)0x40, (char)0x00);
         systemBus.clock();
 
+        byte i = 0;
         while(uiLayer.running)
         {
+            systemBus.getCpu().setA( (i++) );
+            System.out.println(systemBus.getCpu().getA());
             systemBus.clock();
-            //systemBus.cpu.
             uiLayer.updateUI();
         }
 
