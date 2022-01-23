@@ -1,7 +1,6 @@
 package ui;
 
 import core.SystemBus;
-import imgui.ImFont;
 import imgui.ImGuiIO;
 import imgui.ImGuiViewport;
 import imgui.flag.ImGuiConfigFlags;
@@ -55,7 +54,7 @@ public class UILayer implements IEventListener{
         ImGuiGl.init("#version 410");
     }
 
-    public void ImGuiBegin()
+    public void ImGuibegin()
     {
         ImGuiGlfw.newFrame();
         ImGui.newFrame();
@@ -65,7 +64,7 @@ public class UILayer implements IEventListener{
     {
         window.clear();
 
-        ImGuiBegin();
+        ImGuibegin();
         {
             boolean dockspaceOpen = true;
             boolean opt_fullscreen_persistant = true;
@@ -109,12 +108,12 @@ public class UILayer implements IEventListener{
             //dockspace end
             ImGui.end();
         }
-        ImGuiEnd();
+        ImGuiend();
 
         window.update();
     }
 
-    public void ImGuiEnd(){
+    public void ImGuiend(){
 
         ImGui.render();
         ImGuiGl.renderDrawData(ImGui.getDrawData());
