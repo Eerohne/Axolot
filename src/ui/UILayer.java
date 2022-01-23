@@ -2,8 +2,7 @@ package ui;
 
 import core.CPU;
 import core.SystemBus;
-import imgui.ImGuiIO;
-import imgui.ImGuiViewport;
+import imgui.*;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
@@ -64,7 +63,15 @@ public class UILayer implements IEventListener{
         ImGuiGlfw.init(windowHandle, true);
 
         ImGuiGl = new ImGuiImplGl3();
+
+        ImFontAtlas fontAtlas = ImGuiIO.getFonts();
+        ImFontConfig fontConfig = new ImFontConfig();
+        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
+
+        ImFont font = ImGuiIO.getFonts().addFontFromFileTTF("FreeMono.ttf", 15, fontConfig);
+
         ImGuiGl.init("#version 410");
+        //ImGui.pushFont(font);
     }
 
     public void ImGuibegin()
@@ -79,8 +86,11 @@ public class UILayer implements IEventListener{
     {
         window.clear();
 
+
         ImGuibegin();
         {
+
+
             boolean dockspaceOpen = true;
             boolean opt_fullscreen_persistant = true;
             boolean opt_fullscreen = opt_fullscreen_persistant;
@@ -142,8 +152,10 @@ public class UILayer implements IEventListener{
 
             //dockspace end
             ImGui.end();
+
         }
         ImGuiend();
+        //ImGui.popFont();
 
         window.update();
     }
