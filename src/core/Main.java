@@ -15,8 +15,7 @@ public class Main {
         byte i = 0;
         while(uiLayer.running)
         {
-            systemBus.getCpu().setA( (i++) );
-            System.out.println(systemBus.getCpu().getA());
+            //systemBus.getCpu().setA( (i++) );
             systemBus.clock();
             uiLayer.updateUI();
         }
