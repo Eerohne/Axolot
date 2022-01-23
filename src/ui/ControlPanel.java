@@ -47,9 +47,9 @@ public class ControlPanel extends Panel{
             }
         }
 
-        if(ImGui.button("Reset"))
+        if(ImGui.button("Reset Computer"))
         {
-            //systemBus.reset();
+            systemBus.reset();
         }
     }
 }
