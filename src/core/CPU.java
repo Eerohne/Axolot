@@ -18,7 +18,6 @@ public class CPU extends Device{
      * 0 = zero
      * 1 = carry
      * 2 = negative
-     * // 3 = bigger
      */
     private boolean[] flags = new boolean[3];
 
@@ -31,7 +30,6 @@ public class CPU extends Device{
 
     @Override
     public void clock() {
-        resetFlags();
         byte command = bus.getRam().getValue(pc);
         Command cmd = Command.getCommandDetails(command);
         getCommand(command);
@@ -42,7 +40,7 @@ public class CPU extends Device{
         }
         switch (cmd.getMnemonic()){
             case "nop" :                                break;
-            case "halt":    hlt();                     break;
+            case "hlt" :    hlt();                      break;
             case "add" :    add();  zero(A);            break;
             case "sub" :    sub();  zero(A);            break;
             case "lda" :    lda();  zero(A);            break;
@@ -73,17 +71,17 @@ public class CPU extends Device{
             case "jmp" :    jmp();                      break;
             case "jsr" :    jsr();                      break;
             case "rsr" :    rsr();                      break;
+            case "bnz" :    bnz();                      break;
+            case "bzr" :    bzr();                      break;
+            case "bcr" :    bcr();                      break;
+            case "bng" :    bng();                      break;
+            case "clf" :    clf();                      break;
         }
 
         pc++;
     }
 
     private void zero(byte r){ flags[0] = (r==0); }
-    private void carry(){ flags[1] = (A==0); }
-    private void neg() {  }
-    private void resetFlags(){
-        for (boolean flag : flags) flag = false;
-    }
 
     public void getCommand(byte opcode){
         System.out.println(Command.getCommandDetails(opcode));
@@ -105,10 +103,10 @@ public class CPU extends Device{
         pc++;
     }
 
-    private void hlt() {  }
+    private void hlt() { bus.setHalted(true); }
 
-    private void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A < tmpA);}
-    private void sub() { byte tmpA = A; A -= fetchedValue; flags[1] = (A > tmpA);}
+    private void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A > tmpA);}
+    private void sub() { byte tmpA = A; A -= fetchedValue; flags[2] = (A < tmpA);}
 
     private void lda() { A = fetchedValue; }
     private void ldx() { X = fetchedValue; }
@@ -118,13 +116,13 @@ public class CPU extends Device{
     private void stx() { bus.getRam().storeValue(X, tempAddress); }
     private void sty() { bus.getRam().storeValue(Y, tempAddress); }
 
-    private void inc() { byte tmpA = A; A++; flags[1] = (A < tmpA);}
-    private void inx() { X++; }
-    private void iny() { Y++; }
+    private void inc() { byte tmpA = A; A++; flags[1] = (A > tmpA); }
+    private void inx() { byte tmpX = X; X++; flags[1] = (X > tmpX); }
+    private void iny() { byte tmpY = Y; Y++; flags[1] = (Y > tmpY); }
 
-    private void dec() { A--; }
-    private void dex() { X--; }
-    private void dey() { Y--; }
+    private void dec() { byte tmpA = A; A--; flags[2] = (A < tmpA); }
+    private void dex() { byte tmpX = X; X--; flags[2] = (X < tmpX); }
+    private void dey() { byte tmpY = Y; Y--; flags[2] = (Y < tmpY); }
 
     private void shr() { A >>= 1; }
     private void shl() { A <<= 1; }
@@ -148,10 +146,12 @@ public class CPU extends Device{
     private void jsr(){ bus.getRam().storeAValue(pc, stackPointer++);  stackPointer++; pc = --tempAddress; }
     private void rsr(){ stackPointer -= 2; bus.getRam().getAValue(stackPointer); }
 
-    private void bnz(){}
-    private void bzr(){}
-    private void bcr(){}
-    private void bng(){}
+    private void bnz(){if(!flags[0]) jmp();}
+    private void bzr(){if(flags[0])  jmp();}
+    private void bcr(){if(flags[1])  jmp();}
+    private void bng(){if(flags[2])  jmp();}
+
+    private void clf(){ for (byte i = 0; i < flags.length; i++) flags[i] = false; }
 
     //////////////////////////////////////////////////////////////////
 

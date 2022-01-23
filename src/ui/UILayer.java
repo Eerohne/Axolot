@@ -66,8 +66,8 @@ public class UILayer implements IEventListener{
     static ImString A_RegisterText = new ImString("00");
     static ImString X_RegisterText = new ImString("00");
     static ImString Y_RegisterText = new ImString("00");
-    static ImString PC_RegisterText = new ImString("00");
-    static ImString S_RegisterText = new ImString("00");
+    static ImString PC_RegisterText = new ImString("0000");
+    static ImString S_RegisterText = new ImString("0000");
 
     static ImBoolean[] flagsBool = {new ImBoolean(false), new ImBoolean(false), new ImBoolean(false)};
 
@@ -165,6 +165,8 @@ public class UILayer implements IEventListener{
 
                 if(oldVal != S_RegisterText.get())
                     systemBus.getCpu().setStackPointer(S_RegisterText.get().length() <= 0 ? 0 : (char) Long.parseLong(S_RegisterText.get(), 16));
+
+                //ImGui.text("PC: " + (int)systemBus.getCpu().getPc());
 
                 /*ImGui.text("Y: " + systemBus.getCpu().getY());
                 ImGui.text("PC: " + (int)systemBus.getCpu().getPc());
