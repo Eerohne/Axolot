@@ -12,7 +12,7 @@ public class Main {
         while(uiLayer.running)
         {
             systemBus.clock();
-            uiLayer.updateUI();
+            //uiLayer.updateUI();
         }
 
         uiLayer.destroy();
