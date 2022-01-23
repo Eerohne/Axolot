@@ -63,7 +63,7 @@ public class UILayer implements IEventListener{
         ImGui.newFrame();
     }
 
-    static String myText = "4";
+    static ImString A_RegisterText = new ImString("0");
 
     public void updateUI()
     {
@@ -107,7 +107,7 @@ public class UILayer implements IEventListener{
             {
                 CPU cpu = systemBus.getCpu();
                 ImGui.text("A: " + systemBus.getCpu().getA());
-                //ImGui.inputText("A: ", new ImString(myText), ImGuiInputTextFlags.CallbackResize);
+                ImGui.inputText("A: ", A_RegisterText, ImGuiInputTextFlags.CallbackResize | ImGuiInputTextFlags.CharsHexadecimal);
                 ImGui.text("X: " + systemBus.getCpu().getX());
                 ImGui.text("Y: " + systemBus.getCpu().getY());
                 ImGui.text("PC: " + (int)systemBus.getCpu().getPc());

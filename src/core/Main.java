@@ -12,6 +12,7 @@ public class Main {
         while(uiLayer.running)
         {
             systemBus.clock();
+            System.out.println(systemBus.getCpu().getA());
             uiLayer.updateUI();
         }
 
