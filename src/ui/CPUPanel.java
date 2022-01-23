@@ -24,7 +24,7 @@ public class CPUPanel extends Panel{
         String oldVal;
 
         //PC
-        ImGui.text("PC: ");
+        ImGui.text("Program Counter: ");
         ImGui.sameLine();
         PC_RegisterText.set((Integer.toHexString(((int)cpu.getPc())  & 0xffff) ));
         oldVal = PC_RegisterText.get();
@@ -34,7 +34,7 @@ public class CPUPanel extends Panel{
             systemBus.getCpu().setPc(PC_RegisterText.get().length() <= 0 ? 0 : (char) Long.parseLong(PC_RegisterText.get(), 16));
 
         //A
-        ImGui.text("A: ");
+        ImGui.text("A Register: ");
         ImGui.sameLine();
         A_RegisterText.set((Integer.toHexString(((int)cpu.getA())  & 0xff) ));
         oldVal = A_RegisterText.get();
@@ -44,7 +44,7 @@ public class CPUPanel extends Panel{
             systemBus.getCpu().setA(A_RegisterText.get().length() <= 0 ? 0 : (byte) Long.parseLong(A_RegisterText.get(), 16));
 
         //x
-        ImGui.text("X: ");
+        ImGui.text("X Register: ");
         ImGui.sameLine();
         X_RegisterText.set((Integer.toHexString(((int)cpu.getX())  & 0xff) ));
         oldVal = X_RegisterText.get();
@@ -54,7 +54,7 @@ public class CPUPanel extends Panel{
             systemBus.getCpu().setX(X_RegisterText.get().length() <= 0 ? 0 : (byte) Long.parseLong(X_RegisterText.get(), 16));
 
         //Y
-        ImGui.text("Y: ");
+        ImGui.text("Y Register: ");
         ImGui.sameLine();
         Y_RegisterText.set((Integer.toHexString(((int)cpu.getY())  & 0xff) ));
         oldVal = Y_RegisterText.get();
@@ -64,7 +64,7 @@ public class CPUPanel extends Panel{
             systemBus.getCpu().setY(Y_RegisterText.get().length() <= 0 ? 0 : (byte) Long.parseLong(Y_RegisterText.get(), 16));
 
         //Stack
-        ImGui.text("Stack: ");
+        ImGui.text("Stack Pointer: ");
         ImGui.sameLine();
         S_RegisterText.set((Integer.toHexString(((int)cpu.getStackPointer())  & 0xffff) ));
         oldVal = S_RegisterText.get();
@@ -79,7 +79,7 @@ public class CPUPanel extends Panel{
 
         //flags
 
-        String[] flagNames = {"Z", "C", "N"};
+        String[] flagNames = {"Zero", "Carry", "Negative"};
         for(int i = 0; i < 3; i++)
         {
             flagsBool[i].set(cpu.getFlags()[i]);
