@@ -101,7 +101,10 @@ public class Command {
     }
 
     public static Command getCommandDetails(byte opcode){
-        return commandDict.get(opcode);
+        if(opcode >=commands.length)
+            return commandDict.get(0);
+        else
+            return  commandDict.get(opcode);
     }
 
     public static byte getCommandOpcode(String mnemonic, AddressingMode mode){

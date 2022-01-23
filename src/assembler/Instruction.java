@@ -56,7 +56,7 @@ public class Instruction {
 
     char parsedCharArgument(HashMap<String, Character> doc){
         if(argument.startsWith("$"))
-            return (char)Short.parseShort(argument.replace("$", ""), 16);
+            return (char)Integer.parseInt(argument.replace("$", ""), 16);
         else if(doc.containsKey(argument))
             return doc.get(argument);
         else return (char)Short.parseShort(argument);

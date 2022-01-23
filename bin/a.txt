@@ -1,0 +1,25 @@
+;, immediate
+;# absolute
+;x absolutex
+
+lda , 90 	; Loads 1 into X
+ldx , 25 	; Loads 1 into Y
+
+sta x $0100
+
+:loop
+dec
+dex
+bng # endLoop
+sta x $0100
+jmp # loop
+
+:endLoop
+lda , 01
+sta # $fe01
+lda , 00
+sta # $fe02
+lda , 01
+sta # $fe00
+
+hlt

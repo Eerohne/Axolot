@@ -32,6 +32,9 @@ public class CPU extends Device{
     public void clock() {
         byte command = bus.getRam().getValue(pc);
         Command cmd = Command.getCommandDetails(command);
+        if(cmd == null) {
+            cmd = Command.getCommandDetails((byte)0);
+        }
         getCommand(command);
         switch (cmd.getMode()){
             case IMMEDIATE:     fetchImmediate();   break;
@@ -108,15 +111,15 @@ public class CPU extends Device{
     private void add() {
         byte tmpA = A;
         A += fetchedValue;
-        if(A<0 && tmpA>0) flags[1] = false;
-        else if(A>0 && tmpA<0) flags[1] = true;
+        if(A<0 && tmpA>=0) flags[1] = false;
+        else if(A>0 && tmpA<=0) flags[1] = true;
         else flags[1] = (A<tmpA);
     }
     private void sub() {
         byte tmpA = A;
         A -= fetchedValue;
-        if(A<0 && tmpA>0) flags[2] = true;
-        else if(A>0 && tmpA<0) flags[2] = false;
+        if(A<0 && tmpA>=0) flags[2] = true;
+        else if(A>0 && tmpA<=0) flags[2] = false;
         else flags[2] = (A>tmpA);
     }
 
@@ -128,13 +131,38 @@ public class CPU extends Device{
     private void stx() { bus.getRam().storeValue(X, tempAddress); }
     private void sty() { bus.getRam().storeValue(Y, tempAddress); }
 
-    private void inc() { byte tmpA = A; A++; flags[1] = (A > tmpA); }
-    private void inx() { byte tmpX = X; X++; flags[1] = (X > tmpX); }
-    private void iny() { byte tmpY = Y; Y++; flags[1] = (Y > tmpY); }
+    private void inc() { byte tmpA = A; A++;
+        if(A<0 && tmpA>=0) flags[1] = false;
+        else if(A>0 && tmpA<=0) flags[1] = true;
+        else flags[1] = (A<tmpA);
+    }
+    private void inx() { byte tmpX = X; X++;
+        if(X<0 && tmpX>=0) flags[1] = false;
+        else if(X>0 && tmpX<=0) flags[1] = true;
+        else flags[1] = (X<tmpX);
+    }
+    private void iny() { byte tmpY = Y; Y++;
+        if(Y<0 && tmpY>=0) flags[1] = false;
+        else if(Y>0 && tmpY<=0) flags[1] = true;
+        else flags[1] = (Y<tmpY);
+    }
 
-    private void dec() { byte tmpA = A; A--; flags[2] = (A < tmpA); }
-    private void dex() { byte tmpX = X; X--; flags[2] = (X < tmpX); }
-    private void dey() { byte tmpY = Y; Y--; flags[2] = (Y < tmpY); }
+    private void dec() {
+        byte tmpA = A; A--;
+        if(A<0 && tmpA>=0) flags[2] = true;
+        else if(A>0 && tmpA<=0) flags[2] = false;
+        else flags[2] = (A>tmpA);
+    }
+    private void dex() { byte tmpX = X; X--;
+        if(X<0 && tmpX>=0) flags[2] = true;
+        else if(X>0 && tmpX<=0) flags[2] = false;
+        else flags[2] = (X>tmpX);
+    }
+    private void dey() { byte tmpY = Y; Y--;
+        if(Y<0 && tmpY>=0) flags[2] = true;
+        else if(Y>0 && tmpY<=0) flags[2] = false;
+        else flags[2] = (Y>tmpY);
+    }
 
     private void shr() { A >>= 1; }
     private void shl() { A <<= 1; }

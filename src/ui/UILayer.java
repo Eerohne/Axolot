@@ -68,7 +68,7 @@ public class UILayer implements IEventListener{
         ImFontConfig fontConfig = new ImFontConfig();
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        ImFont font = ImGuiIO.getFonts().addFontFromFileTTF("FreeMono.ttf", 15, fontConfig);
+        ImFont font = ImGuiIO.getFonts().addFontFromFileTTF("FreeMono.ttf", 16, fontConfig);
 
         ImGuiGl.init("#version 410");
         //ImGui.pushFont(font);

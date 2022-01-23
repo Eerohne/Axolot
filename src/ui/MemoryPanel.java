@@ -88,11 +88,20 @@ public class MemoryPanel extends Panel{
         //memory grid
         {
             for (int y = 0; y < 0x10; y++) {
-                for (int x = 0; x < 0x10; x++) {
+                for (int x = -1; x < 0x10; x++) {
                     ImGui.setNextItemWidth(20);
 
 
                     int index = (x + y * 0x10);
+
+                    if(x == -1)
+                    {
+                        if (ImGui.button(("0x" + (y == 0 ? "0":"")+ Integer.toHexString(y * 0x10 + memoryPointer)).toUpperCase())) {
+                        }
+                        ImGui.sameLine();
+                        continue;
+                    }
+
                     boolean pop = false;
 
                     if(systemBus.getCpu().getPc() == (char)(memoryPointer + index))
