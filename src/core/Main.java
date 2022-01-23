@@ -4,8 +4,6 @@ import ui.UILayer;
 
 public class Main {
     public static void main(String[] args) {
-
-
         SystemBus systemBus = new SystemBus();
         UILayer uiLayer = new UILayer(systemBus);
 
@@ -14,6 +12,5 @@ public class Main {
             systemBus.clock();
             //uiLayer.updateUI();
         }
-
     }
 }

@@ -1,8 +1,10 @@
 package core;
 
+import java.util.HashMap;
+
 public class Command {
 
-    public final static Command[] commands =
+    private final static Command[] commands =
     {
         new Command("nop",  "No operation", "No operation defined",                                 AddressingMode.IMPLIED,   (byte)0x00),
         new Command("halt", "Halt",         "Stop the clock",                                       AddressingMode.IMPLIED,   (byte)0x01),
@@ -40,6 +42,8 @@ public class Command {
         new Command("xor",  "XOR Operator", "XOR operation between register A and the given value", AddressingMode.IMMEDIATE, (byte)0x21)
     };
 
+    public static final HashMap<Byte, Command> commandDict = createCommandDictionnary();
+
     private String mnemonic;
     private String name;
     private String desc;
@@ -56,5 +60,35 @@ public class Command {
 
     enum AddressingMode{
         IMPLIED, IMMEDIATE, ABSOLUTE, ABSOLUTEX
+    }
+
+    public String getMnemonic() {
+        return mnemonic;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public AddressingMode getMode() {
+        return mode;
+    }
+
+    public byte getOpcode() {
+        return opcode;
+    }
+
+    private static HashMap<Byte, Command> createCommandDictionnary(){
+        HashMap<Byte, Command> commandHashMap = new HashMap<Byte, Command>(commands.length);
+
+        for (Command command : commands){
+            commandHashMap.put(command.getOpcode(), command);
+        }
+
+        return commandHashMap;
     }
 }
