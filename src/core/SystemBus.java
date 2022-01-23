@@ -4,6 +4,7 @@ package core;
 public class SystemBus extends Device {
     CPU cpu;
     RAM ram;
+    boolean halted = false;
 
     public SystemBus(){
         ram = new RAM();
@@ -12,7 +13,8 @@ public class SystemBus extends Device {
 
     @Override
     public void clock() {
-        //cpu.clock();
+        if(!halted)
+            cpu.clock();
     }
 
     public RAM getRam() {
@@ -21,5 +23,9 @@ public class SystemBus extends Device {
 
     public CPU getCpu() {
         return cpu;
+    }
+
+    public void setHalted(boolean halted) {
+        this.halted = halted;
     }
 }

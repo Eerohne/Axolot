@@ -7,7 +7,7 @@ public class Command {
     private final static Command[] commands =
     {
         new Command("nop",  "No operation", "No operation defined",                                 AddressingMode.IMPLIED,     (byte)0x00),
-        new Command("halt", "Halt",         "Stop the clock",                                       AddressingMode.IMPLIED,     (byte)0x01),
+        new Command("hlt",  "Halt",         "Stop the clock",                                       AddressingMode.IMPLIED,     (byte)0x01),
         new Command("add",  "Add",          "Adds the value stored in register A",                  AddressingMode.IMMEDIATE,   (byte)0x02),
         new Command("add",  "Add",          "Adds the value stored in register A",                  AddressingMode.ABSOLUTE,    (byte)0x03),
         new Command("add",  "Add",          "Adds the value stored in register A",                  AddressingMode.ABSOLUTEX,   (byte)0x04),
@@ -52,7 +52,12 @@ public class Command {
         new Command("jmp",  "Jump",         "Jumps to the given address parameter",                 AddressingMode.ABSOLUTEX,   (byte)0x2B),
         new Command("jsr",  "Jump to subroutine","Jumps to the given subroutine",                   AddressingMode.ABSOLUTE,    (byte)0x2C),
         new Command("jsr",  "Jump to subroutine","Jumps to the given subroutine",                   AddressingMode.ABSOLUTEX,   (byte)0x2D),
-        new Command("rsr",  "Return from subroutine","Returns to the address before jumping",       AddressingMode.ABSOLUTEX,   (byte)0x2D),
+        new Command("rsr",  "Return from subroutine","Returns to the address before jumping",       AddressingMode.ABSOLUTEX,   (byte)0x2E),
+        new Command("bnz",  "Branch if not zero","Branch if the zero flag is false",                AddressingMode.ABSOLUTE,    (byte)0x2F),
+        new Command("bzr",  "Branch if zero","Branch if the zero flag is true",                     AddressingMode.ABSOLUTE,    (byte)0x30),
+        new Command("bcr",  "Branch if carry","Branch if the carry flag is true",                   AddressingMode.ABSOLUTE,    (byte)0x31),
+        new Command("bng",  "Branch if negative","Branch if the negative flag is true",             AddressingMode.ABSOLUTE,    (byte)0x32),
+        new Command("clf",  "Clear flags",  "Sets all flags to false",                              AddressingMode.IMPLIED,     (byte)0x33),
     };
 
     private static final HashMap<Byte, Command> commandDict = createCommandDictionnary();
