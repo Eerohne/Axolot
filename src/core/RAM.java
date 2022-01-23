@@ -1,5 +1,8 @@
 package core;
 
+
+import java.util.Arrays;
+
 public class RAM {
     private byte memory[] = new byte[65536];
 
@@ -23,5 +26,9 @@ public class RAM {
     public void reset()
     {
         this.memory = new byte[65536];
+    }
+
+    public void loadProgram(byte[] program){
+        System.arraycopy(program, 0, memory, 0, program.length);
     }
 }

@@ -1,0 +1,24 @@
+ldx , 01 	; Loads 1 into X
+ldy , 01 	; Loads 1 into Y
+
+			; Transfers value of X in A
+txa 
+sty # $09 	; Stores the value of Y
+add , $00 	; Adds value of Y into A
+
+ldx # $09 	; Make X = Y;
+
+tay 		; Y = A
+
+sta # $1F
+
+bcr # endp
+
+lda , $1F
+inc 
+sta # $10
+
+jmp # $04
+
+:endp
+hlt

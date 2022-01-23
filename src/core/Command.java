@@ -76,7 +76,7 @@ public class Command {
         this.opcode = opcode;
     }
 
-    enum AddressingMode{
+    public enum AddressingMode{
         IMPLIED, IMMEDIATE, ABSOLUTE, ABSOLUTEX
     }
 
@@ -104,6 +104,15 @@ public class Command {
         return commandDict.get(opcode);
     }
 
+    public static byte getCommandOpcode(String mnemonic, AddressingMode mode){
+        for(int i = 0; i<commands.length; i++){
+            if(commands[i].mnemonic.equals(mnemonic) && commands[i].mode.equals(mode))
+                return commands[i].opcode;
+        }
+
+        return 0;
+    }
+
     private static HashMap<Byte, Command> createCommandDictionnary(){
         HashMap<Byte, Command> commandHashMap = new HashMap<Byte, Command>(commands.length);
 
@@ -113,6 +122,7 @@ public class Command {
 
         return commandHashMap;
     }
+
 
     @Override
     public String toString() {
