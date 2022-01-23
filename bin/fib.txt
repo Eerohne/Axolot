@@ -14,8 +14,8 @@ sta # $1F
 
 bcr # endp
 
-lda , $1F
-inc 
+lda # $10
+inc
 sta # $10
 
 jmp # $04
