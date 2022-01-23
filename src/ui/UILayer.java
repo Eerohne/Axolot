@@ -1,15 +1,18 @@
 package ui;
 
+import core.CPU;
 import core.SystemBus;
 import imgui.ImGuiIO;
 import imgui.ImGuiViewport;
 import imgui.flag.ImGuiConfigFlags;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.internal.ImGui;
 import imgui.type.ImBoolean;
+import imgui.type.ImString;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
@@ -60,6 +63,8 @@ public class UILayer implements IEventListener{
         ImGui.newFrame();
     }
 
+    static String myText = "4";
+
     public void updateUI()
     {
         window.clear();
@@ -98,9 +103,15 @@ public class UILayer implements IEventListener{
             //APP UI HERE
 
             ImGui.showDemoWindow();
-
             ImGui.begin("CPU");
-            ImGui.text("A: ");
+            {
+                CPU cpu = systemBus.getCpu();
+                ImGui.text("A: " + systemBus.getCpu().getA());
+                //ImGui.inputText("A: ", new ImString(myText), ImGuiInputTextFlags.CallbackResize);
+                ImGui.text("X: " + systemBus.getCpu().getX());
+                ImGui.text("Y: " + systemBus.getCpu().getY());
+                ImGui.text("PC: " + (int)systemBus.getCpu().getPc());
+            }
             ImGui.end();
 
 

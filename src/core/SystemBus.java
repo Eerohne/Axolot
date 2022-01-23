@@ -18,4 +18,8 @@ public class SystemBus extends Device {
     public RAM getRam() {
         return ram;
     }
+
+    public CPU getCpu() {
+        return cpu;
+    }
 }
