@@ -1,7 +1,9 @@
 package ui;
 
 import core.SystemBus;
+import imgui.ImGuiStyle;
 import imgui.ImVec4;
+import imgui.flag.ImGuiButtonFlags;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
@@ -11,9 +13,10 @@ import imgui.type.ImString;
 public class MemoryPanel extends Panel{
 
     private char memoryPointer = 0;
-    private char selectedCell = 5;
+    private char selectedCell = 0;
 
     private ImString memPtr_RegisterText = new ImString("0000");
+    private ImString mem_EditText = new ImString("00");
 
     @Override
     public void ImGuiRender(SystemBus systemBus) {
@@ -49,6 +52,21 @@ public class MemoryPanel extends Panel{
             ImGui.text("memPtr: " + (int) memoryPointer);
         }
 
+
+        //editField
+        {
+            ImGui.text("Edit memory (" + Integer.toHexString(memoryPointer + selectedCell) + ") : ");
+            ImGui.sameLine();
+            ImGui.setNextItemWidth(50);
+            byte fetchedValue = systemBus.getRam().getValue((char)(memoryPointer + selectedCell));
+            mem_EditText.set((Integer.toHexString((fetchedValue & 0xff)).toUpperCase()));
+            oldVal = mem_EditText.get();
+            ImGui.inputText("  ", mem_EditText, ImGuiInputTextFlags.CallbackResize | ImGuiInputTextFlags.CharsHexadecimal);
+
+            if (oldVal != mem_EditText.get())
+                systemBus.getRam().storeValue((byte)(mem_EditText.get().length() <= 0 ? 0 : (char) Long.parseLong(mem_EditText.get(), 16)), (char)(memoryPointer + selectedCell));
+        }
+
         ImVec4 pressColor =  new ImVec4( 0.5f, 0, 0, 1.0f );
 
         for(int y = 0; y < 0x10; y++)
@@ -56,28 +74,31 @@ public class MemoryPanel extends Panel{
             for(int x = 0; x < 0x10; x++)
             {
                 ImGui.setNextItemWidth(20);
-                //if(ImGui.button((y == 0 ? "0" : "") + Integer.toHexString((x + y * 0x10 )) ))
-                char address = (char)(x + y * 0x10 + memoryPointer);
 
+
+
+                int index = (x + y * 0x10);
                 boolean pop = false;
-
-                if(x + y * 0x10 == selectedCell ) {
-                    ImGui.pushStyleColor(ImGuiCol.Button, 0.5f, 0.5f, 0, 1.0f);
+                if(selectedCell == index)
+                {
                     pop = true;
+                    ImGui.pushStyleColor(ImGuiCol.Button, 0.5f, 0, 0, 1.0f);
                 }
 
-                /*if(ImGui.button("a"))
-                {
-                    System.out.println("h");
-                }*/
-                if(ImGui.button(Integer.toHexString(systemBus.getRam().getValue(address))))
+
+                byte fetchedValue = systemBus.getRam().getValue((char)(memoryPointer + index));
+                ImGui.pushID(index);
+                if(ImGui.button(( (((int)fetchedValue) & 0xff) < 0x10 ? "0" : "") +Integer.toHexString( (int)fetchedValue & 0xff)) )
                 {
                     selectedCell = (char)(x + y * 0x10);
-                    System.out.println((int)selectedCell);
                 }
+                ImGui.popID();
 
                 if(pop)
+                {
                     ImGui.popStyleColor();
+                }
+
 
                 if(x < 0xf)
                     ImGui.sameLine();
