@@ -19,4 +19,9 @@ public class RAM {
         memory[address] = (byte)(aValue >> 8);
         memory[address+1] = (byte)(aValue);
     }
+
+    public void reset()
+    {
+        this.memory = new byte[65536];
+    }
 }
