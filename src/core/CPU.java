@@ -105,8 +105,20 @@ public class CPU extends Device{
 
     private void hlt() { bus.setHalted(true); }
 
-    private void add() { byte tmpA = A; A += fetchedValue; flags[1] = (A > tmpA);}
-    private void sub() { byte tmpA = A; A -= fetchedValue; flags[2] = (A < tmpA);}
+    private void add() {
+        byte tmpA = A;
+        A += fetchedValue;
+        if(A<0 && tmpA>0) flags[1] = false;
+        else if(A>0 && tmpA<0) flags[1] = true;
+        else flags[1] = (A<tmpA);
+    }
+    private void sub() {
+        byte tmpA = A;
+        A -= fetchedValue;
+        if(A<0 && tmpA>0) flags[2] = true;
+        else if(A>0 && tmpA<0) flags[2] = false;
+        else flags[2] = (A>tmpA);
+    }
 
     private void lda() { A = fetchedValue; }
     private void ldx() { X = fetchedValue; }

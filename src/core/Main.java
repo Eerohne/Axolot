@@ -7,6 +7,10 @@ public class Main {
         SystemBus systemBus = new SystemBus();
         UILayer uiLayer = new UILayer(systemBus);
 
+        Util.printBinary((byte)-128);
+        Util.printBinary((byte)-127);
+        Util.printBinary((byte)-1);
+
         //systemBus.getRam().storeValue((byte)0x01, (char)0x00);
 
         systemBus.getRam().storeValue((byte)0x0B, (char)0x00);
