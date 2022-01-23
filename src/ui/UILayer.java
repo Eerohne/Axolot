@@ -67,6 +67,10 @@ public class UILayer implements IEventListener{
     static ImString X_RegisterText = new ImString("00");
     static ImString Y_RegisterText = new ImString("00");
     static ImString PC_RegisterText = new ImString("00");
+    static ImString S_RegisterText = new ImString("00");
+
+    static ImBoolean[] flagsBool = {new ImBoolean(false), new ImBoolean(false), new ImBoolean(false)};
+
 
     public void updateUI()
     {
@@ -105,7 +109,7 @@ public class UILayer implements IEventListener{
 
             //APP UI HERE
 
-            ImGui.showDemoWindow();
+            //CPU PANEL
             ImGui.begin("CPU");
             {
                 CPU cpu = systemBus.getCpu();
@@ -152,10 +156,42 @@ public class UILayer implements IEventListener{
                 if(oldVal != Y_RegisterText.get())
                     systemBus.getCpu().setY(Y_RegisterText.get().length() <= 0 ? 0 : (byte) Long.parseLong(Y_RegisterText.get(), 16));
 
+                //Stack
+                ImGui.text("Stack: ");
+                ImGui.sameLine();
+                S_RegisterText.set((Integer.toHexString(((int)cpu.getStackPointer())  & 0xffff) ));
+                oldVal = S_RegisterText.get();
+                ImGui.inputText( "     ", S_RegisterText, ImGuiInputTextFlags.CallbackResize | ImGuiInputTextFlags.CharsHexadecimal);
 
+                if(oldVal != S_RegisterText.get())
+                    systemBus.getCpu().setStackPointer(S_RegisterText.get().length() <= 0 ? 0 : (char) Long.parseLong(S_RegisterText.get(), 16));
 
-                ImGui.text("Y: " + systemBus.getCpu().getY());
+                /*ImGui.text("Y: " + systemBus.getCpu().getY());
                 ImGui.text("PC: " + (int)systemBus.getCpu().getPc());
+                ImGui.text("Stack: " + (int)systemBus.getCpu().getStackPointer());*/
+
+                //flags
+
+                String[] flagNames = {"Z", "C", "N"};
+                for(int i = 0; i < 3; i++)
+                {
+                    flagsBool[i].set(cpu.getFlags()[i]);
+                    boolean old = cpu.getFlags()[i];
+                    ImGui.checkbox(flagNames[i], flagsBool[i]);
+
+                    if(old != flagsBool[i].get())
+                        systemBus.getCpu().setFlag(i, flagsBool[i].get());
+
+                    ImGui.sameLine();
+                }
+
+            }
+            ImGui.end();
+
+            //MEM PANEL
+            ImGui.begin("MEMORY");
+            {
+
             }
             ImGui.end();
 
