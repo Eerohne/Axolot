@@ -16,3 +16,5 @@ The control window allows to load programs to the computer, as well as to pause,
 The memory window allows the access to all addresses in the memory at any time. You can modify the values of the element in the array yourself, and see the values of each address change as a program continues running.
 
 Finally, the terminal is an output window for the loaded program: if needed, the program can display text to the terminal.
+
+Some sample programs are already made available in the bin folder. 
