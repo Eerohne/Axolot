@@ -1,6 +1,8 @@
 # Axolotl
 An 8-bit computer simulation for McHacks 9
 
+![image](https://user-images.githubusercontent.com/55960699/150711775-3971835c-9572-406d-8fdb-4714747a5564.png)
+
 # How to use?
 
 First, clone the project into your personnal computer. Next, open it with an IDE of your choice using the build.gradle file.
