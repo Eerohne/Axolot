@@ -1,7 +1,7 @@
 # Axolotl
 An 8-bit computer simulation for McHacks 9
 
-![image](https://user-images.githubusercontent.com/55960699/150711775-3971835c-9572-406d-8fdb-4714747a5564.png)
+<img width="851" alt="image" src="https://user-images.githubusercontent.com/55960699/150711898-b3574d9e-823e-414f-a6b1-e80949dfbad8.png">
 
 # How to use?
 
