@@ -1,5 +1,5 @@
 # Axolotl
-An 8-bit computer simulation for McHacks 9
+An 8-bit computer simulation for McHacks 9 (Won the Best Hardware Hack Sponsored by Digi-Key prize)
 
 <img width="851" alt="image" src="https://user-images.githubusercontent.com/55960699/150711898-b3574d9e-823e-414f-a6b1-e80949dfbad8.png">
 
